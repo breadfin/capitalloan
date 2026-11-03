@@ -38,7 +38,7 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
+    html, body {
       font-family: var(--font-family);
       color: var(--color-text-main);
       background-color: var(--color-bg);
@@ -75,7 +75,7 @@
     .brand-subtitle { font-size: 0.65rem; color: #94A3B8; text-transform: uppercase; margin-top: 3px; font-weight: 700; letter-spacing: 0.08em; }
 
     .desktop-nav { display: flex; align-items: center; gap: 28px; }
-    .nav-link { background: none; border: none; color: #ffffff; font-size: 0.95rem; font-weight: 600; cursor: pointer; padding: 6px 0; transition: color 0.2s; }
+    .nav-link { background: none; border: none; color: #ffffff; font-size: 0.95rem; font-weight: 600; cursor: pointer; padding: 6px 0; transition: color 0.2s; text-decoration: none; }
     .nav-link:hover, .nav-link.active { color: #38bdf8; font-weight: 800; border-bottom: 2.5px solid #38bdf8; }
 
     .btn {
@@ -91,7 +91,7 @@
 
     .hero-section {
       background: linear-gradient(135deg, #ffffff 0%, #F0F7F9 100%);
-      padding: 80px 0;
+      padding: 60px 0;
       border-bottom: 1px solid var(--color-border-light);
     }
     .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
@@ -112,7 +112,7 @@
     }
     .form-control:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(3, 105, 161, 0.2); }
 
-    .register-wrapper { background-color: var(--color-bg); padding: 40px 0 60px; flex: 1; }
+    .register-wrapper { background-color: var(--color-bg); padding: 40px 0 60px; }
     .register-container-card {
       background: #ffffff; border-radius: var(--radius-lg);
       border: 1.5px solid var(--color-border); box-shadow: var(--shadow-lg);
@@ -139,10 +139,19 @@
       background-color: #12294B; color: #ffffff; padding: 50px 0 30px;
       border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: auto;
     }
-    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 40px; margin-bottom: 40px; }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; margin-bottom: 30px; }
 
     .page-view { display: none; }
     .page-view.active { display: block; }
+
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.6); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px;
+    }
+    .modal-content {
+      background: #ffffff; width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto;
+      border-radius: var(--radius-md); padding: 32px; box-shadow: var(--shadow-lg); position: relative;
+    }
 
     @media (max-width: 900px) {
       .register-container-card { grid-template-columns: 1fr; }
@@ -185,19 +194,35 @@
   </header>
 
   <main style="flex:1;">
-    <!-- HOME PAGE -->
+    <!-- HOME PAGE WITH FULL SCROLLABLE FLOW -->
     <div id="page-home" class="page-view active">
       <section class="hero-section">
         <div class="container hero-grid">
           <div>
-            <span style="background:rgba(3,105,161,0.1); color:var(--color-primary); padding:6px 14px; border-radius:9999px; font-weight:800; font-size:0.85rem;">ISO 27001 Certified & RBI Registered</span>
-            <h1 style="font-size:3.2rem; font-weight:900; color:var(--color-primary); margin:20px 0; line-height:1.1;">Next-Gen Capital for India’s Ambition</h1>
+            <span style="background:rgba(3,105,161,0.1); color:var(--color-primary); padding:6px 14px; border-radius:9999px; font-weight:800; font-size:0.85rem;">ISO 27001 Certified & RBI Registered NBFC</span>
+            <h1 style="font-size:3rem; font-weight:900; color:var(--color-primary); margin:20px 0; line-height:1.1;">Next-Gen Capital for India’s Ambition</h1>
             <p style="font-size:1.15rem; color:var(--color-text-muted); margin-bottom:32px;">Experience institutional-grade loan products, 100% paperless e-KYC approvals, and low competitive interest rates starting at 8.25% p.a.</p>
-            <div style="display:flex; gap:16px;">
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
               <button onclick="switchPage('register')" class="btn btn-primary" style="padding:14px 32px; font-size:1.05rem;">Apply For Loan →</button>
               <button onclick="switchPage('personal-loans')" class="btn btn-outline" style="padding:14px 28px; font-size:1.05rem;">Explore Products</button>
             </div>
+            
+            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; margin-top:40px;">
+              <div>
+                <div style="font-size:1.5rem; font-weight:900; color:var(--color-primary);">₹45,000 Cr+</div>
+                <div style="font-size:0.8rem; color:var(--color-text-light);">Capital Disbursed</div>
+              </div>
+              <div>
+                <div style="font-size:1.5rem; font-weight:900; color:var(--color-primary);">99.4%</div>
+                <div style="font-size:0.8rem; color:var(--color-text-light);">Sanction Accuracy</div>
+              </div>
+              <div>
+                <div style="font-size:1.5rem; font-weight:900; color:var(--color-primary);">24 Hours</div>
+                <div style="font-size:0.8rem; color:var(--color-text-light);">Direct Disbursal</div>
+              </div>
+            </div>
           </div>
+          
           <div class="card" style="background:linear-gradient(135deg, #0369a1 0%, #0284c7 100%); color:#fff;">
             <h3 style="font-size:1.6rem; font-weight:900; margin-bottom:12px;">Instant Digital Sanction</h3>
             <p style="color:#e0f2fe; margin-bottom:24px; font-size:0.95rem;">Complete 3-step paperless registration with Aadhaar e-KYC and direct bank disbursal within 15 minutes.</p>
@@ -210,51 +235,140 @@
         </div>
       </section>
 
-      <!-- Governance & Testimonial Carousel Section -->
-      <section style="padding: 60px 0; background: var(--color-surface-low); border-top: 1px solid var(--color-border-light); border-bottom: 1px solid var(--color-border-light);">
+      <!-- Institutional Products Section matching screenshot layout -->
+      <section style="padding: 60px 0; background: #ffffff;">
         <div class="container">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 56px; align-items: center;">
-            <div>
-              <span style="background:rgba(3,105,161,0.1); color:var(--color-primary); padding:6px 14px; border-radius:9999px; font-weight:800; font-size:0.85rem; display:inline-block; margin-bottom:14px;">INSTITUTIONAL GOVERNANCE</span>
-              <h2 style="font-size:2.5rem; font-weight:800; color:var(--color-primary); marginBottom:20px;">Built on Trust, Precision & Digital Speed</h2>
-              <p style="color:var(--color-text-muted); font-size:1.05rem; line-height:1.7; marginBottom:32px;">
-                Unlike traditional banks with endless paper delays, Bread Financial integrates automated risk engine technology to provide instant decisions while maintaining strict RBI compliance.
-              </p>
+          <div style="text-align: center; max-width: 700px; margin: 0 auto 48px;">
+            <span style="background:rgba(3,105,161,0.1); color:var(--color-primary); padding:6px 14px; border-radius:9999px; font-weight:800; font-size:0.85rem; display:inline-block; margin-bottom:12px;">FINANCIAL SUITE</span>
+            <h2 style="font-size:2.4rem; font-weight:900; color:var(--color-primary); margin-bottom:14px;">Comprehensive Institutional Products</h2>
+            <p style="color:var(--color-text-muted); font-size:1.05rem;">Tailored credit lines, SME working capital, property mortgages, and asset protection designed for retail and corporate growth.</p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+            <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <span style="background:#e0f2fe; color:var(--color-primary); padding:4px 10px; border-radius:6px; font-size:0.75rem; font-weight:800; display:inline-block; margin-bottom:12px;">UNCOLLATERALIZED</span>
+                <h3 style="font-size:1.3rem; font-weight:900; color:var(--color-primary); margin-bottom:10px;">Personal Loans</h3>
+                <p style="color:var(--color-text-muted); font-size:0.92rem; margin-bottom:16px;">Uncollateralized credit lines up to ₹40 Lakhs for immediate personal requirements, medical, or travel needs.</p>
+                <ul style="list-style:none; font-size:0.85rem; color:#64748b; margin-bottom:20px; display:flex; flex-direction:column; gap:6px;">
+                  <li>✓ Rates from 11.9% p.a.</li>
+                  <li>✓ 100% Paperless e-KYC</li>
+                </ul>
+              </div>
+              <button onclick="switchPage('register')" class="btn btn-outline" style="width:100%;">Apply Personal Loan</button>
             </div>
 
-            <!-- Touch-Friendly Testimonial Carousel -->
-            <div class="card" id="testimonial-carousel-card" style="background:#ffffff; color:var(--color-text-main); border-radius:var(--radius-lg); padding:44px; box-shadow:var(--shadow-lg); position:relative; overflow:hidden; border:1px solid var(--color-border-light); user-select:none;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <h3 style="color:var(--color-primary); font-size:1.4rem; font-weight:800;">Client Testimonial Carousel</h3>
+            <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <span style="background:#e0f2fe; color:var(--color-primary); padding:4px 10px; border-radius:6px; font-size:0.75rem; font-weight:800; display:inline-block; margin-bottom:12px;">SME & ENTERPRISE</span>
+                <h3 style="font-size:1.3rem; font-weight:900; color:var(--color-primary); margin-bottom:10px;">Business Loans</h3>
+                <p style="color:var(--color-text-muted); font-size:0.92rem; margin-bottom:16px;">Working capital, machinery purchase, and commercial expansion credit up to ₹10 Crore for growing enterprises.</p>
+                <ul style="list-style:none; font-size:0.85rem; color:#64748b; margin-bottom:20px; display:flex; flex-direction:column; gap:6px;">
+                  <li>✓ Credit lines up to ₹10 Crore</li>
+                  <li>✓ Flexible overdraft options</li>
+                </ul>
+              </div>
+              <button onclick="switchPage('register')" class="btn btn-outline" style="width:100%;">Apply Business Loan</button>
+            </div>
+
+            <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <span style="background:#e0f2fe; color:var(--color-primary); padding:4px 10px; border-radius:6px; font-size:0.75rem; font-weight:800; display:inline-block; margin-bottom:12px;">MORTGAGE CREDIT</span>
+                <h3 style="font-size:1.3rem; font-weight:900; color:var(--color-primary); margin-bottom:10px;">Home Loans & LAP</h3>
+                <p style="color:var(--color-text-muted); font-size:0.92rem; margin-bottom:16px;">Competitive mortgage rates starting at 8.25% p.a. for home acquisition, construction, or LAP refinancing.</p>
+                <ul style="list-style:none; font-size:0.85rem; color:#64748b; margin-bottom:20px; display:flex; flex-direction:column; gap:6px;">
+                  <li>✓ Tenure up to 30 Years</li>
+                  <li>✓ Balance transfer savings</li>
+                </ul>
+              </div>
+              <button onclick="switchPage('register')" class="btn btn-outline" style="width:100%;">Apply Home Loan</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Governance & Testimonial Section -->
+      <section style="padding: 60px 0; background: var(--color-surface-low); border-top: 1px solid var(--color-border-light); border-bottom: 1px solid var(--color-border-light);">
+        <div class="container">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; align-items: center;">
+            <div>
+              <span style="background:rgba(3,105,161,0.1); color:var(--color-primary); padding:6px 14px; border-radius:9999px; font-weight:800; font-size:0.85rem; display:inline-block; margin-bottom:14px;">INSTITUTIONAL GOVERNANCE</span>
+              <h2 style="font-size:2.2rem; font-weight:900; color:var(--color-primary); margin-bottom:16px;">Built on Trust, Precision & Digital Speed</h2>
+              <p style="color:var(--color-text-muted); font-size:1.02rem; line-height:1.7; margin-bottom:24px;">
+                Unlike traditional banks with endless paper delays, Bread Financial integrates automated risk engine technology to provide instant decisions while maintaining strict RBI compliance.
+              </p>
+              
+              <div style="display:flex; flex-direction:column; gap:14px;">
+                <div style="display:flex; gap:12px; align-items:flex-start;">
+                  <div style="font-weight:900; color:var(--color-primary); font-size:1.1rem;">1</div>
+                  <div>
+                    <div style="font-weight:800; color:var(--color-primary);">Transparent Interest Terms</div>
+                    <div style="font-size:0.85rem; color:var(--color-text-muted);">No hidden charges or surprise foreclosure penalties. Full disclosure upfront.</div>
+                  </div>
+                </div>
+                <div style="display:flex; gap:12px; align-items:flex-start;">
+                  <div style="font-weight:900; color:var(--color-primary); font-size:1.1rem;">2</div>
+                  <div>
+                    <div style="font-weight:800; color:var(--color-primary);">Instant Digital Sanction</div>
+                    <div style="font-size:0.85rem; color:var(--color-text-muted);">Paperless e-KYC and digital agreement signing completed in under 15 minutes.</div>
+                  </div>
+                </div>
+                <div style="display:flex; gap:12px; align-items:flex-start;">
+                  <div style="font-weight:900; color:var(--color-primary); font-size:1.1rem;">3</div>
+                  <div>
+                    <div style="font-weight:800; color:var(--color-primary);">24x7 Digital Client Portal</div>
+                    <div style="font-size:0.85rem; color:var(--color-text-muted);">Track repayments, download interest certificates, and request credit top-ups online.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Testimonial Carousel matching screenshot -->
+            <div class="card" id="testimonial-carousel-card" style="background:#ffffff; color:var(--color-text-main); border-radius:var(--radius-lg); padding:36px; box-shadow:var(--shadow-lg); position:relative; overflow:hidden; border:1px solid var(--color-border-light);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h3 style="color:var(--color-primary); font-size:1.2rem; font-weight:800;">Client Testimonial Carousel</h3>
                 <div style="display:flex; gap:8px;">
-                  <button onclick="prevTestimonial()" class="btn btn-outline" style="width:38px; height:38px; border-radius:50%; padding:0; display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:900;">‹</button>
-                  <button onclick="nextTestimonial()" class="btn btn-outline" style="width:38px; height:38px; border-radius:50%; padding:0; display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:900;">›</button>
+                  <button onclick="prevTestimonial()" class="btn btn-outline" style="width:34px; height:34px; border-radius:50%; padding:0; display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:900;">‹</button>
+                  <button onclick="nextTestimonial()" class="btn btn-outline" style="width:34px; height:34px; border-radius:50%; padding:0; display:flex; align-items:center; justify-content:center; font-size:1rem; font-weight:900;">›</button>
                 </div>
               </div>
 
-              <div id="testimonial-stars" style="display:flex; color:#f59e0b; margin-bottom:16px; gap:4px; font-size:1.2rem;">★★★★★</div>
+              <div id="testimonial-stars" style="display:flex; color:#f59e0b; margin-bottom:12px; gap:4px; font-size:1.1rem;">★★★★★</div>
 
-              <blockquote id="testimonial-quote" style="font-size:1.1rem; lineHeight:1.7; fontStyle:italic; marginBottom:32px; color:var(--color-text-muted); min-height:90px;">
+              <blockquote id="testimonial-quote" style="font-size:1.02rem; line-height:1.6; font-style:italic; margin-bottom:24px; color:var(--color-text-muted); min-height:80px;">
                 "Bread Financial approved our commercial credit facility of ₹2.5 Crore within 24 hours when we expanded our logistics fleet. Their transparent terms and dedicated account officer made all the difference."
               </blockquote>
 
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
-                <div style="display:flex; align-items:center; gap:16px;">
-                  <div id="testimonial-initials" style="width:48px; height:48px; border-radius:50%; background:var(--color-primary); color:#ffffff; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1.1rem; flex-shrink:0;">BP</div>
+                <div style="display:flex; align-items:center; gap:14px;">
+                  <div id="testimonial-initials" style="width:42px; height:42px; border-radius:50%; background:var(--color-primary); color:#ffffff; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1rem; flex-shrink:0;">BP</div>
                   <div>
-                    <div id="testimonial-name" style="font-weight:800; font-size:1.05rem; color:var(--color-primary);">Biju Paul</div>
-                    <div id="testimonial-role" style="font-size:0.88rem; color:var(--color-text-muted);">Managing Director, Apex Logistics Pvt Ltd</div>
+                    <div id="testimonial-name" style="font-weight:800; font-size:1rem; color:var(--color-primary);">Biju Paul</div>
+                    <div id="testimonial-role" style="font-size:0.82rem; color:var(--color-text-muted);">Managing Director, Apex Logistics Pvt Ltd</div>
                   </div>
                 </div>
 
                 <div id="testimonial-dots" style="display:flex; gap:6px;">
-                  <button onclick="setTestimonial(0)" style="width:24px; height:8px; border-radius:4px; background:var(--color-primary); border:none; cursor:pointer;"></button>
-                  <button onclick="setTestimonial(1)" style="width:8px; height:8px; border-radius:4px; background:var(--color-border); border:none; cursor:pointer;"></button>
-                  <button onclick="setTestimonial(2)" style="width:8px; height:8px; border-radius:4px; background:var(--color-border); border:none; cursor:pointer;"></button>
-                  <button onclick="setTestimonial(3)" style="width:8px; height:8px; border-radius:4px; background:var(--color-border); border:none; cursor:pointer;"></button>
+                  <button onclick="setTestimonial(0)" style="width:20px; height:6px; border-radius:3px; background:var(--color-primary); border:none; cursor:pointer;"></button>
+                  <button onclick="setTestimonial(1)" style="width:6px; height:6px; border-radius:3px; background:var(--color-border); border:none; cursor:pointer;"></button>
+                  <button onclick="setTestimonial(2)" style="width:6px; height:6px; border-radius:3px; background:var(--color-border); border:none; cursor:pointer;"></button>
+                  <button onclick="setTestimonial(3)" style="width:6px; height:6px; border-radius:3px; background:var(--color-border); border:none; cursor:pointer;"></button>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Call to Action bottom banner -->
+      <section style="padding:60px 0; text-align:center; background:#ffffff;">
+        <div class="container">
+          <span style="font-size:0.75rem; font-weight:800; color:var(--color-primary); letter-spacing:0.08em; text-transform:uppercase;">GET STARTED TODAY</span>
+          <h2 style="font-size:2.2rem; font-weight:900; color:var(--color-primary); margin:10px 0 14px;">Ready to Accelerate Your Financial Growth?</h2>
+          <p style="color:var(--color-text-muted); font-size:1.02rem; margin-bottom:28px; max-width:600px; margin-left:auto; margin-right:auto;">Apply online in minutes or consult with our corporate credit advisors for tailored financial structuring.</p>
+          <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+            <button onclick="switchPage('register')" class="btn btn-primary" style="padding:14px 32px;">Apply for Loan →</button>
+            <button onclick="switchPage('personal-loans')" class="btn btn-outline" style="padding:14px 28px;">Contact Branch Advisor</button>
           </div>
         </div>
       </section>
@@ -267,7 +381,7 @@
           <div>
             <span style="background:rgba(3,105,161,0.1); color:var(--color-primary); padding:6px 14px; border-radius:9999px; font-weight:800; font-size:0.85rem;">INSTANT UNCOLLATERALIZED CREDIT</span>
             <h1 style="font-size:2.8rem; font-weight:900; color:var(--color-primary); margin:20px 0;">Personal Loans for Every Milestone</h1>
-            <p style="font-size:1.1rem; color:var(--color-text-muted); margin-bottom:24px;">Instant paperless credit up to ₹40,00,000 with flexible repayment terms from 12 to 84 months and attractive rates from 11.9% p.a.</p>
+            <p style="font-size:1.1rem; color:var(--color-text-muted); margin-bottom:24px;">Instant paperless credit up to ₹40,00,000 with flexible repayment terms.</p>
             <button onclick="switchPage('register')" class="btn btn-primary" style="padding:14px 32px;">Open 3-Step e-KYC Portal →</button>
           </div>
           <div class="card">
@@ -276,7 +390,6 @@
               <li>✓ Age between 21 and 60 years</li>
               <li>✓ Minimum net monthly income of ₹25,000</li>
               <li>✓ CIBIL score of 750+</li>
-              <li>✓ Valid Aadhaar, PAN & Salary statements</li>
             </ul>
           </div>
         </div>
@@ -290,12 +403,12 @@
           <div>
             <span style="background:rgba(3,105,161,0.1); color:var(--color-primary); padding:6px 14px; border-radius:9999px; font-weight:800; font-size:0.85rem;">SME WORKING CAPITAL</span>
             <h1 style="font-size:2.8rem; font-weight:900; color:var(--color-primary); margin:20px 0;">Business & SME Credit Facilities</h1>
-            <p style="font-size:1.1rem; color:var(--color-text-muted); margin-bottom:24px;">Working capital lines, machinery purchase, and commercial expansion credit up to ₹10 Crore.</p>
+            <p style="font-size:1.1rem; color:var(--color-text-muted); margin-bottom:24px;">Working capital lines and commercial expansion credit up to ₹10 Crore.</p>
             <button onclick="switchPage('register')" class="btn btn-primary" style="padding:14px 32px;">Apply For Business Loan →</button>
           </div>
           <div class="card">
             <h3 style="font-size:1.4rem; font-weight:900; color:var(--color-primary); margin-bottom:16px;">SME Overdraft Benefits</h3>
-            <p style="color:var(--color-text-muted); font-size:0.92rem; line-height:1.6;">Pay interest only on the utilized credit limit with flexible renewal terms and zero collateral options available.</p>
+            <p style="color:var(--color-text-muted); font-size:0.92rem; line-height:1.6;">Pay interest only on the utilized credit limit.</p>
           </div>
         </div>
       </section>
@@ -308,12 +421,12 @@
           <div>
             <span style="background:rgba(3,105,161,0.1); color:var(--color-primary); padding:6px 14px; border-radius:9999px; font-weight:800; font-size:0.85rem;">MORTGAGE CAPITAL</span>
             <h1 style="font-size:2.8rem; font-weight:900; color:var(--color-primary); margin:20px 0;">Home Loans & Mortgages</h1>
-            <p style="font-size:1.1rem; color:var(--color-text-muted); margin-bottom:24px;">Competitive rates from 8.25% p.a. with long tenures up to 30 years and instant property valuation.</p>
+            <p style="font-size:1.1rem; color:var(--color-text-muted); margin-bottom:24px;">Competitive rates from 8.25% p.a. with long tenures up to 30 years.</p>
             <button onclick="switchPage('register')" class="btn btn-primary" style="padding:14px 32px;">Apply For Home Loan →</button>
           </div>
           <div class="card">
             <h3 style="font-size:1.4rem; font-weight:900; color:var(--color-primary); margin-bottom:16px;">Balance Transfer Discount</h3>
-            <p style="color:var(--color-text-muted); font-size:0.92rem;">Switch your existing higher-rate mortgage to Bread Financial to cut your monthly EMI by up to 18%.</p>
+            <p style="color:var(--color-text-muted); font-size:0.92rem;">Switch your existing mortgage to cut your monthly EMI by up to 18%.</p>
           </div>
         </div>
       </section>
@@ -326,12 +439,12 @@
           <div>
             <span style="background:rgba(3,105,161,0.1); color:var(--color-primary); padding:6px 14px; border-radius:9999px; font-weight:800; font-size:0.85rem;">SECURED ASSET LIQUIDITY</span>
             <h1 style="font-size:2.8rem; font-weight:900; color:var(--color-primary); margin:20px 0;">Gold Loans & Securities (LAS)</h1>
-            <p style="font-size:1.1rem; color:var(--color-text-muted); margin-bottom:24px;">Instant liquidity backed by gold ornaments, mutual funds, or stock investment portfolios.</p>
+            <p style="font-size:1.1rem; color:var(--color-text-muted); margin-bottom:24px;">Instant liquidity backed by gold ornaments or stock investment portfolios.</p>
             <button onclick="switchPage('register')" class="btn btn-primary" style="padding:14px 32px;">Apply For Gold Loan →</button>
           </div>
           <div class="card">
             <h3 style="font-size:1.4rem; font-weight:900; color:var(--color-primary); margin-bottom:16px;">Retain Growth Returns</h3>
-            <p style="color:var(--color-text-muted); font-size:0.92rem;">All capital gains, dividends, and corporate actions remain 100% yours while pledged.</p>
+            <p style="color:var(--color-text-muted); font-size:0.92rem;">All capital gains and dividends remain 100% yours while pledged.</p>
           </div>
         </div>
       </section>
@@ -580,11 +693,11 @@
         </div>
       </div>
       <div class="container" style="padding:40px 0;">
-        <div class="card" style="margin-bottom:24px; border:1.5px solid #bae6fd;">
-          <h3 style="font-size:1.1rem; font-weight:800; color:var(--color-primary); margin-bottom:8px;">🔍 Quick Client ID Lookup</h3>
-          <p style="font-size:0.85rem; color:var(--color-text-muted); margin-bottom:12px;">Type Client ID (e.g. BF-4821) or client name to instantly find their details:</p>
-          <input type="text" id="admin-search-input" class="form-control" placeholder="Search by Client ID (e.g. BF-4821)..." oninput="loadAdminDashboard()" style="max-width:400px; border-radius:8px;">
+        <div class="card" style="margin-bottom:24px; padding:20px; display:flex; gap:16px; align-items:center;">
+          <input type="text" id="admin-search-input" placeholder="🔍 Search by Client ID (e.g. BF-4821) or Name..." class="form-control" style="flex:1; border-radius:8px;" oninput="filterAdminApplications()">
+          <button onclick="loadAdminDashboard()" class="btn btn-outline" style="padding:12px 20px;">Reset</button>
         </div>
+
         <div class="card">
           <h3 style="font-size:1.4rem; font-weight:900; color:var(--color-primary); margin-bottom:20px;">All Client Applications</h3>
           <div id="admin-applications-table-wrap">Loading applications...</div>
@@ -593,24 +706,62 @@
     </div>
   </main>
 
-  <footer>
-    <div class="container footer-grid">
-      <div>
-        <h3 style="color:#38bdf8; font-size:1.1rem; font-weight:900; margin-bottom:12px;">Bread Financial Credit</h3>
-        <p style="color:#94A3B8; font-size:0.85rem; line-height:1.6;">Bread Financial Credit Co. Ltd. is a non-banking financial corporation registered under RBI regulations, offering institutional credit, SME facilities, and consumer loans.</p>
+  <!-- ADMIN DETAILED CLIENT MODAL & EDIT FORM -->
+  <div id="admin-client-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid #bae6fd; padding-bottom:12px;">
+        <h2 id="modal-client-title" style="color:var(--color-primary); font-size:1.3rem; font-weight:900;">Client Details & Edit</h2>
+        <button onclick="closeAdminModal()" class="btn btn-outline" style="padding:6px 12px; font-size:0.8rem;">✕ Close</button>
       </div>
-      <div>
-        <h4 style="color:#ffffff; font-size:0.95rem; font-weight:800; margin-bottom:12px;">Loan Products</h4>
-        <div style="display:flex; flex-direction:column; gap:8px; font-size:0.85rem; color:#94A3B8;">
-          <span style="cursor:pointer;" onclick="switchPage('personal-loans')">Personal Loans (up to ₹40L)</span>
-          <span style="cursor:pointer;" onclick="switchPage('business-loans')">Business & SME Credit</span>
-          <span style="cursor:pointer;" onclick="switchPage('home-loans')">Home Loans & Mortgages</span>
-          <span style="cursor:pointer;" onclick="switchPage('gold-lap-las')">Gold Loans & LAS</span>
+      <div id="modal-client-body" style="font-size:0.9rem;"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 style="color:#38bdf8; font-size:1.1rem; font-weight:900; margin-bottom:12px;">Bread Financial CREDIT</h3>
+          <p style="color:#94A3B8; font-size:0.85rem; line-height:1.6;">Bread Financial Credit Co. Ltd. is a non-banking financial corporation registered under RBI regulations, offering institutional credit, SME facilities, and consumer loans.</p>
+          <div style="margin-top:14px; font-size:0.8rem; color:#38bdf8; font-weight:700;">🛡️ Certified Financial Institution</div>
+        </div>
+        <div>
+          <h4 style="color:#ffffff; font-size:0.95rem; font-weight:800; margin-bottom:12px;">Credit Products</h4>
+          <div style="display:flex; flex-direction:column; gap:8px; font-size:0.85rem; color:#94A3B8;">
+            <span style="cursor:pointer;" onclick="switchPage('personal-loans')">Personal Loans</span>
+            <span style="cursor:pointer;" onclick="switchPage('business-loans')">Business & SME Loans</span>
+            <span style="cursor:pointer;" onclick="switchPage('home-loans')">Home Loans & LAP</span>
+            <span style="cursor:pointer;" onclick="switchPage('gold-lap-las')">Gold Loans & LAS</span>
+            <span>Insurance Services</span>
+          </div>
+        </div>
+        <div>
+          <h4 style="color:#ffffff; font-size:0.95rem; font-weight:800; margin-bottom:12px;">Company & Investors</h4>
+          <div style="display:flex; flex-direction:column; gap:8px; font-size:0.85rem; color:#94A3B8;">
+            <span>About Us</span>
+            <span>Investor Disclosures</span>
+            <span>Careers & Open Roles</span>
+            <span>Knowledge Center</span>
+          </div>
+        </div>
+        <div>
+          <h4 style="color:#ffffff; font-size:0.95rem; font-weight:800; margin-bottom:12px;">Support & Grievance</h4>
+          <div style="display:flex; flex-direction:column; gap:8px; font-size:0.85rem; color:#94A3B8;">
+            <span>Contact Customer Care</span>
+            <span>Lodge Official Grievance</span>
+            <span style="cursor:pointer;" onclick="switchPage('register')">Client Account Portal</span>
+            <span>Email: customercare@breadfinancial.com</span>
+            <span>Toll Free: 1800-425-9900</span>
+          </div>
         </div>
       </div>
-      <div>
-        <h4 style="color:#ffffff; font-size:0.95rem; font-weight:800; margin-bottom:12px;">Regulatory & Compliance</h4>
-        <p style="color:#94A3B8; font-size:0.82rem;">RBI Registration No: B-14.03211<br>© 2026 Bread Financial Credit Co. Ltd. All rights reserved.</p>
+      <div style="border-top:1px solid rgba(255,255,255,0.1); padding-top:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; font-size:0.82rem; color:#94A3B8;">
+        <div>© 2026 Bread Financial Credit Co. Ltd. All rights reserved. Registered NBFC Reg. No. N-14.0321.</div>
+        <div style="display:flex; gap:16px;">
+          <span>Privacy Policy</span>
+          <span>Terms of Credit</span>
+          <a href="#" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;" style="color:#38bdf8; text-decoration:none; font-weight:700;">Top ↑</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -619,7 +770,6 @@
     let currentRegStep = 1;
     let uploadedData = { aadharFront: '', aadharBack: '', photo: '', nomineeAadhar: '' };
 
-    // Testimonial Carousel Data & Logic with Touch Swiping Support
     const testimonials = [
       {
         quote: "Bread Financial approved our commercial credit facility of ₹2.5 Crore within 24 hours when we expanded our logistics fleet. Their transparent terms and dedicated account officer made all the difference.",
@@ -648,8 +798,6 @@
     ];
 
     let currentTestimonialIdx = 0;
-    let touchStartX = 0;
-    let touchEndX = 0;
 
     function setTestimonial(idx) {
       currentTestimonialIdx = (idx + testimonials.length) % testimonials.length;
@@ -660,14 +808,12 @@
       document.getElementById('testimonial-initials').innerText = t.initials;
 
       const dotsContainer = document.getElementById('testimonial-dots');
-      if (dotsContainer) {
-        let dotsHtml = '';
-        for (let i = 0; i < testimonials.length; i++) {
-          const isSel = i === currentTestimonialIdx;
-          dotsHtml += `<button onclick="setTestimonial(${i})" style="width:${isSel ? '24px' : '8px'}; height:8px; border-radius:4px; background:${isSel ? 'var(--color-primary)' : 'var(--color-border)'}; border:none; cursor:pointer; transititransitionon:all 0.3s ease;"></button>`;
-transition
-        dotsContainer.innerHTML = dotsHtml;
+      let dotsHtml = '';
+      for (let i = 0; i < testimonials.length; i++) {
+        const isSel = i === currentTestimonialIdx;
+        dotsHtml += `<button onclick="setTestimonial(${i})" style="width:${isSel ? '20px' : '6px'}; height:6px; border-radius:3px; background:${isSel ? 'var(--color-primary)' : 'var(--color-border)'}; border:none; cursor:pointer; transition:all 0.3s ease;"></button>`;
       }
+      dotsContainer.innerHTML = dotsHtml;
     }
 
     function nextTestimonial() {
@@ -676,28 +822,6 @@ transition
 
     function prevTestimonial() {
       setTestimonial(currentTestimonialIdx - 1);
-    }
-
-    // Touch swipe listeners for carousel
-    const carouselCard = document.getElementById('testimonial-carousel-card');
-    if (carouselCard) {
-      carouselCard.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, { passive: true });
-
-      carouselCard.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-      }, { passive: true });
-    }
-
-    function handleSwipe() {
-      if (touchEndX < touchStartX - 50) {
-        nextTestimonial();
-      }
-      if (touchEndX > touchStartX + 50) {
-        prevTestimonial();
-      }
     }
 
     function switchPage(pageId) {
@@ -822,7 +946,6 @@ transition
         bankName, bankAcc, bankIfsc, password,
         status: 'Pending',
         walletBalance: 0,
-        withdrawalState: 'none',
         documents: uploadedData
       };
 
@@ -889,63 +1012,23 @@ transition
       `;
     }
 
-    function requestWithdrawal() {
-      const widget = document.getElementById('withdrawal-widget-card');
-      widget.style.display = 'block';
-      document.getElementById('withdrawal-status-text').innerText = 'Verifying bank account details with RBI clearing house...';
-      
-      let seconds = 300;
-      const timerBox = document.getElementById('countdown-timer-box');
-      const interval = setInterval(() => {
-        seconds--;
-        let m = Math.floor(seconds / 60);
-        let s = seconds % 60;
-        timerBox.innerText = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
-        if (seconds <= 0) {
-          clearInterval(interval);
-          document.getElementById('bank-mismatch-error').style.display = 'block';
-          document.getElementById('withdrawal-status-text').innerText = 'Verification Failed:';
-          timerBox.style.display = 'none';
-        }
-      }, 1000);
-    }
-
     function loadAdminDashboard() {
       let apps = JSON.parse(localStorage.getItem('breadfinancial_apps') || '[]');
+      renderAdminTable(apps);
+    }
+
+    function renderAdminTable(apps) {
       if (apps.length === 0) {
-        apps = [{
-          id: 'BF-8891',
-          fullName: 'Rajesh Kumar',
-          email: 'rajesh@example.com',
-          phone: '+91 98765 43210',
-          loanAmount: '300000',
-          status: 'Pending',
-          walletBalance: 250000,
-          bankName: 'HDFC Bank',
-          bankAcc: '501002345678',
-          bankIfsc: 'HDFC0001234'
-        }];
-        localStorage.setItem('breadfinancial_apps', JSON.stringify(apps));
+        document.getElementById('admin-applications-table-wrap').innerHTML = '<p style="color:#64748b; text-align:center; padding:20px;">No client applications found.</p>';
+        return;
       }
-
-      const searchInput = document.getElementById('admin-search-input');
-      const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
-
-      const filteredApps = apps.filter(app => {
-        if (!query) return true;
-        return (
-          (app.id && app.id.toLowerCase().includes(query)) ||
-          (app.fullName && app.fullName.toLowerCase().includes(query)) ||
-          (app.phone && app.phone.includes(query))
-        );
-      });
 
       let html = `<table style="width:100%; border-collapse:collapse; font-size:0.9rem;">
         <thead>
           <tr style="background:#f0f9ff; border-bottom:2px solid #bae6fd; text-align:left;">
-            <th style="padding:12px;">ID & Name</th>
+            <th style="padding:12px;">Client ID & Name</th>
             <th style="padding:12px;">Contact</th>
-            <th style="padding:12px;">Loan (₹)</th>
+            <th style="padding:12px;">Loan Req (₹)</th>
             <th style="padding:12px;">Status</th>
             <th style="padding:12px;">Wallet (₹)</th>
             <th style="padding:12px;">Actions</th>
@@ -953,42 +1036,129 @@ transition
         </thead>
         <tbody>`;
 
-      if (filteredApps.length === 0) {
-        html += `<tr><td colspan="6" style="padding:24px; text-align:center; color:#64748b;">No client matching ID or query found.</td></tr>`;
-      } else {
-        filteredApps.forEach((app) => {
-          const idx = apps.findIndex(a => a === app);
-          html += `<tr style="border-bottom:1px solid #e0f2fe;">
-            <td style="padding:12px;"><strong>${app.id}</strong><br>${app.fullName}</td>
-            <td style="padding:12px;">${app.phone}<br>${app.email}</td>
-            <td style="padding:12px;">₹${Number(app.loanAmount || 0).toLocaleString('en-IN')}</td>
-            <td style="padding:12px;"><span style="background:${app.status==='Approved'?'#DCFCE7':'#FEF3C7'}; color:${app.status==='Approved'?'#15803d':'#B45309'}; padding:4px 8px; border-radius:9999px; font-weight:800; font-size:0.75rem;">${app.status}</span></td>
-            <td style="padding:12px;"><input type="number" id="wallet-edit-${idx}" value="${app.walletBalance || 0}" style="width:90px; padding:4px; border:1px solid #bae6fd; border-radius:4px;"></td>
-            <td style="padding:12px; display:flex; gap:6px;">
-              <button onclick="toggleAppStatus(${idx})" class="btn" style="background:#12294B; color:#fff; padding:6px 10px; font-size:0.75rem;">Toggle Status</button>
-              <button onclick="saveAdminWallet(${idx})" class="btn" style="background:#0369a1; color:#fff; padding:6px 10px; font-size:0.75rem;">Save Wallet</button>
-            </td>
-          </tr>`;
-        });
-      }
+      apps.forEach((app) => {
+        html += `<tr style="border-bottom:1px solid #e0f2fe;">
+          <td style="padding:12px;"><strong style="color:var(--color-primary);">${app.id}</strong><br>${app.fullName}</td>
+          <td style="padding:12px;">${app.phone}<br><span style="font-size:0.8rem; color:#64748b;">${app.email}</span></td>
+          <td style="padding:12px;">₹${Number(app.loanAmount).toLocaleString('en-IN')}</td>
+          <td style="padding:12px;"><span style="background:${app.status==='Approved'?'#DCFCE7':'#FEF3C7'}; color:${app.status==='Approved'?'#15803d':'#B45309'}; padding:4px 8px; border-radius:9999px; font-weight:800; font-size:0.75rem;">${app.status}</span></td>
+          <td style="padding:12px;"><input type="number" id="wallet-edit-${app.id}" value="${app.walletBalance || 0}" style="width:90px; padding:4px; border:1px solid #bae6fd; border-radius:4px;"></td>
+          <td style="padding:12px; display:flex; gap:6px; flex-wrap:wrap;">
+            <button onclick="viewClientDetails('${app.id}')" class="btn btn-outline" style="padding:6px 10px; font-size:0.75rem;">✏️ Edit & View</button>
+            <button onclick="toggleAppStatusById('${app.id}')" class="btn" style="background:#12294B; color:#fff; padding:6px 10px; font-size:0.75rem;">Status</button>
+            <button onclick="saveAdminWalletById('${app.id}')" class="btn" style="background:#0369a1; color:#fff; padding:6px 10px; font-size:0.75rem;">Save</button>
+          </td>
+        </tr>`;
+      });
       html += `</tbody></table>`;
       document.getElementById('admin-applications-table-wrap').innerHTML = html;
     }
 
-    function toggleAppStatus(idx) {
+    function filterAdminApplications() {
+      const q = document.getElementById('admin-search-input').value.toLowerCase().trim();
       let apps = JSON.parse(localStorage.getItem('breadfinancial_apps') || '[]');
-      apps[idx].status = apps[idx].status === 'Approved' ? 'Pending' : 'Approved';
-      localStorage.setItem('breadfinancial_apps', JSON.stringify(apps));
-      loadAdminDashboard();
+      if (!q) {
+        renderAdminTable(apps);
+        return;
+      }
+      let filtered = apps.filter(a => a.id.toLowerCase().includes(q) || a.fullName.toLowerCase().includes(q) || a.phone.includes(q) || a.email.toLowerCase().includes(q));
+      renderAdminTable(filtered);
     }
 
-    function saveAdminWallet(idx) {
+    function viewClientDetails(id) {
       let apps = JSON.parse(localStorage.getItem('breadfinancial_apps') || '[]');
-      const val = document.getElementById('wallet-edit-' + idx).value;
-      apps[idx].walletBalance = Number(val);
-      localStorage.setItem('breadfinancial_apps', JSON.stringify(apps));
-      alert('Wallet balance updated successfully.');
-      loadAdminDashboard();
+      let client = apps.find(a => a.id === id);
+      if (!client) return;
+
+      document.getElementById('modal-client-title').innerText = `Edit Client Dossier: ${client.fullName} (${client.id})`;
+      
+      let docs = client.documents || {};
+      let html = `
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+          <div>
+            <label style="font-size:0.8rem; font-weight:800;">Full Name</label>
+            <input type="text" id="edit-name" value="${client.fullName}" class="form-control" style="border-radius:6px; padding:8px;">
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:800;">Email</label>
+            <input type="email" id="edit-email" value="${client.email}" class="form-control" style="border-radius:6px; padding:8px;">
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:800;">Phone</label>
+            <input type="tel" id="edit-phone" value="${client.phone}" class="form-control" style="border-radius:6px; padding:8px;">
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:800;">Loan Amount (₹)</label>
+            <input type="number" id="edit-loan" value="${client.loanAmount}" class="form-control" style="border-radius:6px; padding:8px;">
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:800;">Bank Name</label>
+            <input type="text" id="edit-bank" value="${client.bankName || ''}" class="form-control" style="border-radius:6px; padding:8px;">
+          </div>
+          <div>
+            <label style="font-size:0.8rem; font-weight:800;">Account Number</label>
+            <input type="text" id="edit-acc" value="${client.bankAcc || ''}" class="form-control" style="border-radius:6px; padding:8px;">
+          </div>
+        </div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-bottom:20px;">
+          <button onclick="saveClientEdits('${client.id}')" class="btn btn-primary" style="padding:10px 20px;">Save Changes 💾</button>
+        </div>
+        <div style="border-top:1px solid #bae6fd; padding-top:14px;">
+          <h4 style="color:var(--color-primary); font-weight:800; margin-bottom:8px;">🪪 Uploaded KYC Documents Preview</h4>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            ${docs.aadharFront ? `<div><span style="font-size:0.75rem; font-weight:700;">Aadhaar Front</span><br><img src="${docs.aadharFront}" style="width:120px; height:80px; object-fit:cover; border-radius:6px; border:1px solid #bae6fd;"></div>` : ''}
+            ${docs.aadharBack ? `<div><span style="font-size:0.75rem; font-weight:700;">Aadhaar Back</span><br><img src="${docs.aadharBack}" style="width:120px; height:80px; object-fit:cover; border-radius:6px; border:1px solid #bae6fd;"></div>` : ''}
+            ${docs.photo ? `<div><span style="font-size:0.75rem; font-weight:700;">Profile Photo</span><br><img src="${docs.photo}" style="width:80px; height:80px; object-fit:cover; border-radius:50%; border:1px solid #bae6fd;"></div>` : ''}
+          </div>
+        </div>
+      `;
+
+      document.getElementById('modal-client-body').innerHTML = html;
+      document.getElementById('admin-client-modal').style.display = 'flex';
+    }
+
+    function saveClientEdits(id) {
+      let apps = JSON.parse(localStorage.getItem('breadfinancial_apps') || '[]');
+      let client = apps.find(a => a.id === id);
+      if (client) {
+        client.fullName = document.getElementById('edit-name').value;
+        client.email = document.getElementById('edit-email').value;
+        client.phone = document.getElementById('edit-phone').value;
+        client.loanAmount = document.getElementById('edit-loan').value;
+        client.bankName = document.getElementById('edit-bank').value;
+        client.bankAcc = document.getElementById('edit-acc').value;
+
+        localStorage.setItem('breadfinancial_apps', JSON.stringify(apps));
+        alert('Client details updated successfully!');
+        closeAdminModal();
+        loadAdminDashboard();
+      }
+    }
+
+    function closeAdminModal() {
+      document.getElementById('admin-client-modal').style.display = 'none';
+    }
+
+    function toggleAppStatusById(id) {
+      let apps = JSON.parse(localStorage.getItem('breadfinancial_apps') || '[]');
+      let app = apps.find(a => a.id === id);
+      if (app) {
+        app.status = app.status === 'Approved' ? 'Pending' : 'Approved';
+        localStorage.setItem('breadfinancial_apps', JSON.stringify(apps));
+        loadAdminDashboard();
+      }
+    }
+
+    function saveAdminWalletById(id) {
+      let apps = JSON.parse(localStorage.getItem('breadfinancial_apps') || '[]');
+      let app = apps.find(a => a.id === id);
+      const valInput = document.getElementById('wallet-edit-' + id);
+      if (app && valInput) {
+        app.walletBalance = Number(valInput.value);
+        localStorage.setItem('breadfinancial_apps', JSON.stringify(apps));
+        alert('Wallet balance updated for ' + id);
+        loadAdminDashboard();
+      }
     }
 
     function logoutClient() {
